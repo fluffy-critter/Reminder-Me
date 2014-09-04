@@ -73,3 +73,23 @@ p.back a {
 #feedlink a {
     font-face: "Lucida Console", Courier, "Courier New", monospace;
 }
+
+.required {
+    color: #900;
+    font-style: italic;
+}
+
+.error {
+    background: #fee;
+    padding: 1ex;
+    border: dashed black 1px;
+    margin-bottom: 1em;
+}
+
+.error span {
+    font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+}
