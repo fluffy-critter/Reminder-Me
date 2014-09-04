@@ -43,16 +43,11 @@ response = '''Content-type: text/html
 <body>
 '''
 
-if feed.guid:
-    response += '''
-<div id="feedlink">
-<li>Feed URL: <a href="{feed_url}">{feed_url}</a></li>
-</div>
-'''
-
 response += '''
+<div class="container">
 <h1>Editing Feed</h1>
 
+<div>
 <form method="POST" action="edit.cgi">'''
 
 if feed.guid:
@@ -63,7 +58,7 @@ response += '''
 <li><label for="name">Name:</label>
     <input type="text" name="name" id="name" value="{name}" placeholder="Name of the reminder">
 </li>
-<li><label for="description">Description:</label>
+<li><label for="description">Description:</label> (HTML okay)
     <textarea id="description" name="description" placeholder="A detailed description">{desc}</textarea>
 </li>
 <li><label for="interval">Remind every</label>
@@ -84,7 +79,20 @@ response += '''
 </ul>
 
 <input type="submit" value="Update">
-</form>
+</form></div>
+</div>
+'''
+
+if feed.guid:
+    response += '''
+<div class="container" id="feedlink">
+<h1>Feed URL</h1>
+<div><a href="{feed_url}">{feed_url}</a></div>
+</div>
+'''
+
+response += '''
+<p class="back"><a href=".">Reminder Me</a></p>
 
 </body>
 </html>

@@ -27,9 +27,10 @@ response = '''Content-type: application/rss+xml
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-<title><![CDATA[Reminder: {name}]]></title>
+<title><![CDATA[Reminder Me: {name}]]></title>
 <atom:link href="{feed_url}" rel="self" type="application/rss+xml" />
-<description><![CDATA[{description}]]></description>
+<link>{edit_url}</link>
+<description><![CDATA[A Reminder Me feed for {name}]]></description>
 <language>en-us</language>'''
 
 if feed.notify_next < datetime.datetime.now():
@@ -48,9 +49,10 @@ if feed.notify_next < datetime.datetime.now():
 <ul>
 <li><a href="{done_url}">Mark completed</a></li>
 <li>Snooze for: <ul>
-  <li><a href="{snooze_url}/3600">1h</a></li>
-  <li><a href="{snooze_url}/28800">8h</a></li>
-  <li><a href="{snooze_url}/86400">1d</a></li>
+  <li><a href="{snooze_url}/1800">30 minutes</a></li>
+  <li><a href="{snooze_url}/3600">1 hour</a></li>
+  <li><a href="{snooze_url}/28800">8 hours</a></li>
+  <li><a href="{snooze_url}/86400">1 day</a></li>
   </ul>
 <li><a href="{edit_url}">Edit reminder</a></li>
 </ul>
