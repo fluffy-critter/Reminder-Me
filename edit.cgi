@@ -35,9 +35,6 @@ if needsSave:
     if not feed.notify_next or now > feed.notify_next:
         feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
 
-    if not feed.description:
-        feed.description = ''
-
     try:
         feed.save()
         feedValid = True

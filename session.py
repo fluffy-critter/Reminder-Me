@@ -4,7 +4,7 @@ import os
 
 cgitb.enable()
 
-_form = cgi.FieldStorage()
+_form = cgi.FieldStorage(keep_blank_values=True)
 ipAddr = os.getenv('REMOTE_ADDR')
 
 _user = None

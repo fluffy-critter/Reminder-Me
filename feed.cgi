@@ -67,8 +67,8 @@ response += '''
 
 update_guid=md5("%s %s" % (feed.guid, feed.last_seen)).hexdigest()
 print response.format(
-    name=feed.name,
-    description=feed.description,
+    name=feed.name or '',
+    description=feed.description or '',
     feed_url="%s/feed.cgi/%s" % (basedir, feed.guid),
     ping_url="%s/ping.cgi/%s/%s" % (basedir, feed.guid, update_guid),
     done_url="%s/action.cgi/%s/done" % (basedir, feed.guid),

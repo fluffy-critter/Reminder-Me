@@ -13,13 +13,13 @@ class BaseModel(Model):
 
 class Feed(BaseModel):
     # use a generated guid for the index, for mild security
-    guid = CharField(null=False,unique=True)
+    guid = CharField(null=False,primary_key=True)
 
     # title for updates
     name = CharField(null=False)
 
     # text to display on updates
-    description = CharField()
+    description = CharField(null=True)
 
     # time of next notification
     notify_next = DateTimeField()
