@@ -43,7 +43,7 @@ response = '''Content-type: text/html
 <ul>
 <li><a href="{edit_url}?feed={guid}">Edit this reminder</a></li>
 <li><a href="{edit_url}">Create another reminder</a></li>
-<li><a href="{base_url}">Visit the Reminder-Me site</a></li>
+<li><a href="{base_url}">Visit the Reminder Me site</a></li>
 </ul>
 </div>
 </div>

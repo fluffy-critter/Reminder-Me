@@ -1,13 +1,17 @@
-# Reminder-Me
+# Reminder Me
 
 A simple Python web service to generate RSS feeds for recurring
 reminders.
 
+Demo site: [http://rm.beesbuzz.biz/](http://rm.beesbuzz.biz/)
+
+## About
+
 Ever need recurring reminders to do simple things, but always forget
 to do it? Hate trying to deal with various reminder apps, but live in
-an RSS reader for everything anyway?  Reminder-Me might be for you!
+an RSS reader for everything anyway?  Reminder Me might be for you!
 
-What this does is generates an RSS feed which will remind you to do
+This simply generates an RSS feed which will remind you to do
 something after a certain period of time.  If you ignore the reminder,
 it'll keep on reminding you until you say you've done the thing (as
 long as your feed reader shows images, anyway).
