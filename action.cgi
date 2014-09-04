@@ -24,7 +24,7 @@ Content-type: text/html
 Unknown action %s''' % action
     sys.exit(1)
 
-feed.notify_next = datetime.datetime.now() + datetime.timedelta(seconds=when)
+feed.notify_next = datetime.datetime.utcnow() + datetime.timedelta(seconds=when)
 feed.save()
 
 response = '''Content-type: text/html

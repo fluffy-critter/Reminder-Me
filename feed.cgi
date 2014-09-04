@@ -33,12 +33,12 @@ response = '''Content-type: application/rss+xml
 <description><![CDATA[A Reminder Me feed for {name}]]></description>
 <language>en-us</language>'''
 
-if feed.notify_next < datetime.datetime.now():
+if feed.notify_next < datetime.datetime.utcnow():
     response += '''
 <item>
 <title><![CDATA[Reminder: {name}]]></title>
 <link>{done_url}</link>
-<guid>{update_guid}</guid>
+<guid>{done_url}/{update_guid}</guid>
 <description><![CDATA[
 <p>{description}
 <img src="{ping_url}">
@@ -58,7 +58,7 @@ if feed.notify_next < datetime.datetime.now():
 </ul>
 ]]>
 </description>
-<pubDate>{last_seen}</pubDate>
+<pubDate>{notify_time}</pubDate>
 </item>'''
 
 response += '''
@@ -75,6 +75,6 @@ print response.format(
     edit_url="%s/edit.cgi?feed=%s" % (basedir, feed.guid),
     snooze_url="%s/action.cgi/%s/snooze" % (basedir, feed.guid),
     update_guid=update_guid,
-    last_seen=feed.last_seen
+    notify_time=feed.last_seen.strftime('%a, %d %b %Y %H:%M:%S +0000')
     )
 

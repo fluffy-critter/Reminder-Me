@@ -31,7 +31,7 @@ for key,(prop,type) in {
 
 error_message = None
 if needsSave:
-    now = datetime.datetime.now()
+    now = datetime.datetime.utcnow()
     if not feed.notify_next or now > feed.notify_next:
         feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
 

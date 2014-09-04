@@ -8,7 +8,7 @@ import base64
 argv = session.argv()
 
 feed = Feed.get(guid=argv[1])
-feed.last_seen = datetime.datetime.now()
+feed.last_seen = datetime.datetime.utcnow()
 feed.save()
 
 data=base64.b64decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==')
