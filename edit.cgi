@@ -5,6 +5,7 @@ import session
 import uuid
 import htmlfuncs
 import datetime
+import sys
 
 feedValid = False
 newFeed = False
@@ -37,6 +38,13 @@ if needsSave:
     try:
         feed.save(force_insert=newFeed)
         feedValid = True
+        print '''Location: {edit_url}
+Content-type: text/html
+
+<a href="{edit_url}">Saved; redirecting...</a>'''.format(
+    edit_url='%s?feed=%s'%(session.request_script_path(),feed.guid))
+        sys.exit()
+        
     except Exception as e:
         error_message = e.message
 
@@ -45,7 +53,7 @@ response = '''Content-type: text/html
 <!DOCTYPE html>
 <html>
 <head>
-<title>Editing Feed</title>
+<title>Editing Feed{title_name}</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -113,6 +121,7 @@ response += '''
 print response.format(
     feed_url="%s/feed.cgi/%s" % (session.request_script_dir(), feed.guid),
     guid=feed.guid,
+    title_name=htmlfuncs.form_sanitize(feed.name and (': %s'%feed.name) or ''),
     name=htmlfuncs.form_sanitize(feed.name or ''),
     desc=htmlfuncs.form_sanitize(feed.description or ''),
     interval=feed.notify_interval or 1,
