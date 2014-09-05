@@ -75,6 +75,6 @@ print response.format(
     edit_url="%s/edit.cgi?feed=%s" % (basedir, feed.guid),
     snooze_url="%s/action.cgi/%s/snooze" % (basedir, feed.guid),
     update_guid=update_guid,
-    notify_time=feed.last_seen.strftime('%a, %d %b %Y %H:%M:%S +0000')
+    notify_time=feed.notify_next.strftime('%a, %d %b %Y %H:%M:%S +0000')
     )
 
