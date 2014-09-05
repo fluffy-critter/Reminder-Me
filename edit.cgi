@@ -7,13 +7,15 @@ import htmlfuncs
 import datetime
 
 feedValid = False
+newFeed = False
 
 form = session.form()
 if form.getfirst('feed'):
-    feed = Feed.get(Feed.guid == form.getfirst('feed'))
+    feed = Feed.get(guid=form.getfirst('feed'))
     feedValid = True
 else:
-    feed = Feed()
+    feed = Feed(guid = uuid.uuid4())
+    newFeed = True
 
 needsSave = False
 for key,(prop,type) in {
@@ -23,9 +25,6 @@ for key,(prop,type) in {
         'unit': ('notify_unit',int),
         }.items() :
     if form.getfirst(key) != None:
-        # We're saving to a new feed, so populate its basic data
-        if not feed.guid:
-            feed.guid = uuid.uuid4()
         setattr(feed, prop, type(form.getfirst(key)))
         needsSave = True
 
@@ -36,7 +35,7 @@ if needsSave:
         feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
 
     try:
-        feed.save()
+        feed.save(force_insert=newFeed)
         feedValid = True
     except Exception as e:
         error_message = e.message
