@@ -10,8 +10,12 @@ argv = session.argv()
 feed = Feed.get(guid=argv[1])
 action = argv[2]
 
+now = datetime.datetime.utcnow()
+
+drift = 0
 if action == 'done':
     when = feed.notify_interval * feed.notify_unit
+    drift = max(0,min((now - feed.notify_next).seconds, when/4))
 elif action == 'snooze':
     if len(argv) > 3:
         when = int(argv[3])
@@ -24,7 +28,7 @@ Content-type: text/html
 Unknown action %s''' % action
     sys.exit(1)
 
-feed.notify_next = datetime.datetime.utcnow() + datetime.timedelta(seconds=when)
+feed.notify_next = now + datetime.timedelta(seconds=when-drift)
 feed.save()
 
 response = '''Content-type: text/html
