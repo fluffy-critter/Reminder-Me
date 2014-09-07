@@ -16,10 +16,10 @@ class Feed(BaseModel):
     guid = CharField(null=False,primary_key=True)
 
     # title for updates
-    name = CharField(null=False)
+    name = CharField(null=False,max_length=255)
 
     # text to display on updates
-    description = CharField(null=True)
+    description = CharField(null=True,max_length=255)
 
     # time of next notification
     notify_next = DateTimeField()

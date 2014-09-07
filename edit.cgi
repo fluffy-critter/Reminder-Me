@@ -29,8 +29,19 @@ for key,(prop,type) in {
         setattr(feed, prop, type(form.getfirst(key)))
         needsSave = True
 
-error_message = None
-if needsSave:
+errors = []
+if not feed.name:
+    errors.append("Reminder needs a name.")
+elif len(feed.name) > 255:
+    errors.append("Name should be a reasonable length.")
+
+if len(feed.description) > 255:
+    errors.append("Description should be a reasonable length.")
+
+if feed.notify_interval <= 0 or feed.notify_unit <= 0:
+    errors.append("Time units should make sense.")
+
+if not errors and needsSave:
     now = datetime.datetime.utcnow()
     if not feed.notify_next or now > feed.notify_next:
         feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
@@ -46,7 +57,7 @@ Content-type: text/html
         sys.exit()
         
     except Exception as e:
-        error_message = e.message
+        errors.append(e.message)
 
 response = '''Content-type: text/html
 
@@ -62,12 +73,19 @@ response = '''Content-type: text/html
 response += '''
 <div class="container">
 <h1>Editing Feed</h1>
+'''
 
-<div>
-<form method="POST" action="edit.cgi">'''
+if errors:
+    if len(errors) == 1:
+        response += '<div class="error">Error: <span>%s</span></div>' % errors[0]
+    else:
+        response += '<div class="error">Errors:<ul>'
+        for err in errors:
+            response += '<li>%s</li>' % err
+        response += '</ul></div>'
 
-if error_message:
-    response += '<div class="error">Error: <span>%s</span></div>' % error_message
+
+response += '''<div><form method="POST" action="edit.cgi">'''
 
 if feedValid:
     response += '<input type="hidden" name="feed" value="{guid}">'

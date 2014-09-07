@@ -82,11 +82,11 @@ p.back a {
 .error {
     background: #fee;
     padding: 1ex;
-    border: dashed black 1px;
+    border-bottom: dashed black 1px;
     margin-bottom: 1em;
 }
 
-.error span {
+.error span, .error li {
     font-weight: bold;
 }
 
