@@ -65,7 +65,7 @@ response += '''
 </channel>
 </rss>''';
 
-update_guid=md5("%s %s" % (feed.guid, feed.last_seen)).hexdigest()
+update_guid=md5("%s %s %s" % (feed.guid, feed.notify_next, feed.last_seen)).hexdigest()
 print response.format(
     name=feed.name or '',
     description=feed.description or '',
