@@ -1,6 +1,6 @@
 from peewee import *
 
-database = SqliteDatabase('reminders.db')
+database = SqliteDatabase('../data/reminders.db')
 database.connect()
 
 class BaseModel(Model):
