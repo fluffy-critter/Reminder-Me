@@ -30,34 +30,35 @@ for key,(prop,type) in {
         needsSave = True
 
 errors = []
-if not feed.name:
-    errors.append("Reminder needs a name.")
-elif len(feed.name) > 255:
-    errors.append("Name should be a reasonable length.")
+if needsSave:
+    if not feed.name:
+        errors.append("Reminder needs a name.")
+    elif len(feed.name) > 255:
+        errors.append("Name should be a reasonable length.")
 
-if len(feed.description) > 255:
-    errors.append("Description should be a reasonable length.")
+    if len(feed.description) > 255:
+        errors.append("Description should be a reasonable length.")
 
-if feed.notify_interval <= 0 or feed.notify_unit <= 0:
-    errors.append("Time units should make sense.")
+    if feed.notify_interval <= 0 or feed.notify_unit <= 0:
+        errors.append("Time units should make sense.")
 
-if not errors and needsSave:
     now = datetime.datetime.utcnow()
     if not feed.notify_next or now > feed.notify_next:
         feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
 
-    try:
-        feed.save(force_insert=newFeed)
-        feedValid = True
-        print '''Location: {edit_url}
+    if not errors:
+        try:
+            feed.save(force_insert=newFeed)
+            feedValid = True
+            print '''Location: {edit_url}
 Content-type: text/html
 
 <a href="{edit_url}">Saved; redirecting...</a>'''.format(
     edit_url='%s?feed=%s'%(session.request_script_path(),feed.guid))
-        sys.exit()
+            sys.exit()
         
-    except Exception as e:
-        errors.append(e.message)
+        except Exception as e:
+            errors.append(e.message)
 
 response = '''Content-type: text/html
 
