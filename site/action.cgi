@@ -1,11 +1,13 @@
 #!/usr/bin/python
 
 from model import Feed
-import session
 import datetime
+import renderfuncs
+import session
 import sys
 
 argv = session.argv()
+form = session.form()
 
 feed = Feed.get(guid=argv[1])
 action = argv[2]
@@ -31,8 +33,12 @@ Unknown action %s''' % action
 feed.notify_next = now + datetime.timedelta(seconds=when-drift)
 feed.save()
 
-response = '''Content-type: text/html
+response = 'Content-type: text/html\n'
 
+if form.getfirst('edit'):
+    response += 'Location: %s/edit.cgi?feed=%s\n' % (session.request_script_dir(),feed.guid)
+
+response += '''
 <html><head><title>Alarm reset</title>
 <link rel="stylesheet" href="{base_url}/style.css">
 </head>
@@ -41,7 +47,15 @@ response = '''Content-type: text/html
 <div class="container">
 <h1>Alarm reset</h1>
 <div>
-<p id="reset">Alarm "<span class="name">{name}</span>" has been reset. You won't be notified for another <span class="duration">{duration}</span>.</p>
+<p id="reset">Alarm "<span class="name">{name}</span>" has been reset.'''
+
+if when:
+    response += '''
+You won't be notified for another <span class="duration">{duration}</span>.
+'''
+
+response += '''
+</p>
 
 <p>Actions:</p>
 <ul>
@@ -56,31 +70,11 @@ response = '''Content-type: text/html
 
 </body></html>'''
 
-when_left = when
-duration_list = []
-for (label,period) in [('month',86400*365/12),
-                       ('week',86400*7),
-                       ('day',86400),
-                       ('hour',3600),
-                       ('minute',60),
-                       ('second',1)]:
-    if when == period:
-        duration_list = [label]
-        break
-    
-    val = when_left/period
-    if val:
-        duration_list.append("%d %s%s" % (
-            val,
-            label,
-            val > 1 and 's' or ''))
-        when_left -= val*period
-
 basedir=session.request_script_dir()
 
 print response.format(guid=feed.guid,
                       name=feed.name,
                       edit_url="%s/edit.cgi" % basedir,
                       base_url=basedir,
-                      duration=', '.join(duration_list))
+                      duration=renderfuncs.format_delta(datetime.timedelta(seconds=when)))
                       

@@ -34,13 +34,13 @@ a:active { color: #900; }
     padding: 2ex;
 }
 
-form ul {
+ul.form {
     list-style-type: none;
     margin: 0px;
     padding: 0px;
 }
 
-form ul li {
+ul.form li {
     margin: 0px;
     padding: 0px 0px 1ex;
 }
@@ -70,8 +70,16 @@ p.back a {
     text-decoration: none;
 }
 
-#feedlink a {
-    font-face: "Lucida Console", Courier, "Courier New", monospace;
+#feedinfo a.feed {
+    font-family: "Lucida Console", Courier, "Courier New", monospace;
+}
+
+#feedinfo dt {
+    font-weight: bold;
+}
+
+#feedinfo dd {
+    margin-bottom: 1ex;
 }
 
 .required {

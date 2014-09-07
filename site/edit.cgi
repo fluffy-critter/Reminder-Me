@@ -3,12 +3,15 @@
 from model import Feed
 import session
 import uuid
-import htmlfuncs
+import renderfuncs
 import datetime
 import sys
 
 feedValid = False
 newFeed = False
+
+now = datetime.datetime.utcnow()
+notify_length = None
 
 form = session.form()
 if form.getfirst('feed'):
@@ -29,6 +32,9 @@ for key,(prop,type) in {
         setattr(feed, prop, type(form.getfirst(key)))
         needsSave = True
 
+if feed.notify_interval > 0 and feed.notify_unit > 0:
+    notify_length = datetime.timedelta(seconds=feed.notify_interval * feed.notify_unit)
+        
 errors = []
 if needsSave:
     if not feed.name:
@@ -42,9 +48,8 @@ if needsSave:
     if feed.notify_interval <= 0 or feed.notify_unit <= 0:
         errors.append("Time units should make sense.")
 
-    now = datetime.datetime.utcnow()
-    if not feed.notify_next or now > feed.notify_next:
-        feed.notify_next = now + datetime.timedelta(seconds=feed.notify_interval*feed.notify_unit)
+    if notify_length and not feed.notify_next:
+        feed.notify_next = now + notify_length
 
     if not errors:
         try:
@@ -122,12 +127,22 @@ response += '''
 </div>
 '''
 
-if feedValid:
+if feedValid and not errors:
     response += '''
-<div class="container" id="feedlink">
-<h1>Feed URL</h1>
-<div><a href="{feed_url}">{feed_url}</a></div>
-</div>
+<div class="container" id="feedinfo">
+<h1>Feed Information</h1>
+<div>
+<dl>
+
+<dt>Feed URL</dt>
+<dd><a class="feed" href="{feed_url}">{feed_url}</a></dd>
+
+<dt>Next due</dt>
+<dd>{next_due_time} (reset to: <a href="{snooze_url}/0?edit=1">now</a>, <a href="{snooze_url}/{notify_length}?edit=1">{notify_length_text}</a>)</dd>
+
+</dl>
+</ul>
+</div></div>
 '''
 
 response += '''
@@ -140,8 +155,12 @@ response += '''
 print response.format(
     feed_url="%s/feed.cgi/%s" % (session.request_script_dir(), feed.guid),
     guid=feed.guid,
-    title_name=htmlfuncs.form_sanitize(feed.name and (': %s'%feed.name) or ''),
-    name=htmlfuncs.form_sanitize(feed.name or ''),
-    desc=htmlfuncs.form_sanitize(feed.description or ''),
+    title_name=renderfuncs.form_sanitize(feed.name and (': %s'%feed.name) or ''),
+    name=renderfuncs.form_sanitize(feed.name or ''),
+    desc=renderfuncs.form_sanitize(feed.description or ''),
     interval=feed.notify_interval or 1,
+    notify_length=int(notify_length.total_seconds()),
+    notify_length_text=renderfuncs.format_delta(notify_length, False),
+    next_due_time=renderfuncs.format_delta(feed.notify_next - now, False),
+    snooze_url="%s/action.cgi/%s/snooze" % (session.request_script_dir(), feed.guid),
     )
