@@ -11,7 +11,7 @@ feedValid = False
 newFeed = False
 
 now = datetime.datetime.utcnow()
-notify_length = None
+notify_length = datetime.timedelta(seconds=0)
 
 form = session.form()
 if form.getfirst('feed'):
@@ -161,6 +161,6 @@ print response.format(
     interval=feed.notify_interval or 1,
     notify_length=int(notify_length.total_seconds()),
     notify_length_text=renderfuncs.format_delta(notify_length, False),
-    next_due_time=renderfuncs.format_delta(feed.notify_next - now, False),
+    next_due_time=feed.notify_next and renderfuncs.format_delta(feed.notify_next - now, False) or '',
     snooze_url="%s/action.cgi/%s/snooze" % (session.request_script_dir(), feed.guid),
     )
