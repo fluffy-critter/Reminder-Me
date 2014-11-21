@@ -60,7 +60,7 @@ ul.form li {
 }
 
 p.back a {
-    position: absolute;
+    position: fixed;
     bottom: 0px;
     border-top: solid black 1px;
     color: black;
@@ -100,4 +100,11 @@ p.back a {
 
 label {
     font-weight: bold;
+}
+
+.create {
+    margin-top: 0px;
+    font-size: small;
+    font-style: italic;
+    font-weight: normal;
 }

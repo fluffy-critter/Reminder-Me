@@ -78,8 +78,12 @@ response = '''Content-type: text/html
 
 response += '''
 <div class="container">
-<h1>Editing Feed</h1>
+<h1>Editing Feed
 '''
+
+if feedValid:
+	response += '<a class="create" href="{app_url}">Create another</a>'
+response += '</h1>'
 
 if errors:
     if len(errors) == 1:
@@ -153,6 +157,7 @@ response += '''
 '''
 
 print response.format(
+    app_url="%s/feed.cgi" % session.request_script_dir(),
     feed_url="%s/feed.cgi/%s" % (session.request_script_dir(), feed.guid),
     guid=feed.guid,
     title_name=renderfuncs.form_sanitize(feed.name and (': %s'%feed.name) or ''),

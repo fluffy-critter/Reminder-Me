@@ -37,7 +37,7 @@ if feed.notify_next < datetime.datetime.utcnow():
     response += '''
 <item>
 <title><![CDATA[Reminder: {name}]]></title>
-<link>{done_url}</link>
+<link>{done_url}/{update_guid}</link>
 <guid>{done_url}/{update_guid}</guid>
 <description><![CDATA[
 <p>{description}
@@ -47,7 +47,7 @@ if feed.notify_next < datetime.datetime.utcnow():
 <p>Options:</p>
 
 <ul>
-<li><a href="{done_url}">Mark completed</a></li>
+<li><a href="{done_url}/{update_guid}">Mark completed</a></li>
 <li>Snooze for: <ul>
   <li><a href="{snooze_url}/1800">30 minutes</a></li>
   <li><a href="{snooze_url}/3600">1 hour</a></li>
