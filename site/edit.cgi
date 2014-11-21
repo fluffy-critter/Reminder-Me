@@ -157,7 +157,7 @@ response += '''
 '''
 
 print response.format(
-    app_url="%s/feed.cgi" % session.request_script_dir(),
+    app_url="%s/edit.cgi" % session.request_script_dir(),
     feed_url="%s/feed.cgi/%s" % (session.request_script_dir(), feed.guid),
     guid=feed.guid,
     title_name=renderfuncs.form_sanitize(feed.name and (': %s'%feed.name) or ''),
