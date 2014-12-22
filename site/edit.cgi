@@ -142,7 +142,8 @@ if feedValid and not errors:
 <dd><a class="feed" href="{feed_url}">{feed_url}</a></dd>
 
 <dt>Next due</dt>
-<dd>{next_due_time} (reset to: <a href="{snooze_url}/0?edit=1">now</a>, <a href="{snooze_url}/{notify_length}?edit=1">{notify_length_text}</a>)</dd>
+<dd>{next_due_time} (reset to: <a href="{snooze_url}/0?edit=1">now</a>,
+    <a href="{snooze_url}/{notify_length}?edit=1">{notify_length_text}</a>)</dd>
 
 </dl>
 </ul>

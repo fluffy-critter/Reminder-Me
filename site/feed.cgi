@@ -5,6 +5,7 @@ import session
 import base64
 import datetime
 import sys
+import renderfuncs
 from hashlib import md5
 
 argv = session.argv()
@@ -48,11 +49,15 @@ if feed.notify_next < datetime.datetime.utcnow():
 
 <ul>
 <li><a href="{done_url}/{update_guid}">Mark completed</a></li>
-<li>Snooze for: <ul>
-  <li><a href="{snooze_url}/1800">30 minutes</a></li>
-  <li><a href="{snooze_url}/3600">1 hour</a></li>
-  <li><a href="{snooze_url}/28800">8 hours</a></li>
-  <li><a href="{snooze_url}/86400">1 day</a></li>
+<li>Snooze for: <ul>'''
+
+    times=list(set([1800, 3600, 8*3600, 86400, 3*86400, feed.notify_interval*feed.notify_unit/2, feed.notify_interval*feed.notify_unit]))
+    times.sort()
+
+    for time in times:
+        response += '<li><a href="{snooze_url}/%d">%s</a></li>' % (time, renderfuncs.format_delta(datetime.timedelta(seconds=time),False))
+
+    response += '''
   </ul>
 <li><a href="{edit_url}">Edit reminder</a></li>
 </ul>
