@@ -71,10 +71,11 @@ response = '''Content-type: text/html
 <html>
 <head>
 <title>Editing Feed{title_name}</title>
-<link rel="stylesheet" href="style.css">'''
+<link rel="stylesheet" href="style.css">
+'''
 
 if feedValid:
-    response += '<link rel="alternate" title="{name} RSS feed" content-type="application/rss+xml" href="{feed_url}">'
+    response += '<link rel="alternate" title="{name} RSS feed" type="application/rss+xml" href="{feed_url}">'
 
 response += '''
 </head>
