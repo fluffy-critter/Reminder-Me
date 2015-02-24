@@ -22,6 +22,9 @@ The requested feed is not available.
     sys.exit(1)
 
 basedir=session.request_script_dir()
+now = datetime.datetime.utcnow()
+notify_interval = feed.notify_interval*feed.notify_unit
+notify_time = max(feed.notify_next, now - datetime.timedelta(seconds=notify_interval))
 
 response = '''Content-type: application/rss+xml
 
@@ -34,7 +37,7 @@ response = '''Content-type: application/rss+xml
 <description><![CDATA[A Reminder Me feed for {name}]]></description>
 <language>en-us</language>'''
 
-if feed.notify_next < datetime.datetime.utcnow():
+if notify_time < now:
     response += '''
 <item>
 <title><![CDATA[Reminder: {name}]]></title>
@@ -51,7 +54,7 @@ if feed.notify_next < datetime.datetime.utcnow():
 <li><a href="{done_url}/{update_guid}">Mark completed</a></li>
 <li>Snooze for: <ul>'''
 
-    times=list(set([1800, 3600, 8*3600, 86400, 3*86400, feed.notify_interval*feed.notify_unit/2, feed.notify_interval*feed.notify_unit]))
+    times=list(set([1800, 3600, 8*3600, 86400, 3*86400, notify_interval/2, notify_interval]))
     times.sort()
 
     for time in times:
@@ -80,6 +83,6 @@ print response.format(
     edit_url="%s/edit.cgi?feed=%s" % (basedir, feed.guid),
     snooze_url="%s/action.cgi/%s/snooze" % (basedir, feed.guid),
     update_guid=update_guid,
-    notify_time=feed.notify_next.strftime('%a, %d %b %Y %H:%M:%S +0000')
+    notify_time=notify_time.strftime('%a, %d %b %Y %H:%M:%S +0000')
     )
 
