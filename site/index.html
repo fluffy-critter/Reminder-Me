@@ -1,81 +1,50 @@
 <!DOCTYPE html>
-<html><head>
-<title>Reminder Me</title>
-<link rel="stylesheet" href="style.css">
+<html>
 
+<head>
+    <title>Reminder Me</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<div class="container">
-  <h1>Reminder Me</h1>
-
-<div>
-  
-  <p>This is a really simple web service that allows you to set up an
-  RSS feed to remind you to do things.</p>
-
-  <p>No account is required; you can just <a href="edit.cgi">create a
-  feed</a> to get started!</p>
-
-  <p>You can also <a
-  href="https://github.com/plaidfluff/Reminder-Me">fork me on
-  GitHub</a>, and if you have any problems, feel free to <a
-  href="https://github.com/plaidfluff/Reminder-Me/issues">report a bug</a>.</p>
-
-</div>
-</div>
-
-
-<div class="container">
-<h1>Detailed Usage</h1>
-
-<div>
-
-<p>Let's say that you have set reminders for the following:</p>
-
-<ul>
-<li>Clean the cat box (every 2 days)</li>
-<li>Water the plants (daily)</li>
-<li>Clean out the ice maker (every 2 weeks)</li>
-<li>Update my financial planning spreadsheet (every month)</li>
-</ul>
-
-<p>Reminder Me generates one feed for each of those tasks. Whenever a
-task becomes due, it places an item for that task into the feed.
-There that item sits, until you click on the link that marks it as
-being done, at which point a new due date is computed that tries to
-keep the activity more or less regular.</p>
-
-<p>But it's a bit smarter than just generating a single RSS item. The
-item also has a little tracking image in it, which will bump the feed
-item's GUID every time it's viewed.  This way, if you see an item but
-just ignore it, the next time the feed reader checks the feed, it
-gives me a new notification in the RSS inbox.</p>
-
-<p>The ideal use case for Reminder Me is if you tend to check your RSS
-feeds religiously and either maintain "inbox zero" (as I do) or put
-some sort of high-priority display on important feeds. Obviously if
-you let items sit in your inbox for years, this won't do you much good
-(but you might want to reevaluate what RSS is meant for in that
-case).</p>
-
-</div></div>
-
-<div class="container">
-<h1>Other</h1>
-
-<div>
-
-<p>Reminder Me is licensed under the terms of GPLv2; the full license
-information can be found in the LICENSE file within the
-distribution.</p>
-
-<p>This is a <a href="http://beesbuzz.biz/">busybee</a> production.</p>
-
-<p>RSS is my social network,
-and <a href="https://news.beesbuzz.biz/fof/shared.php?user=2">these
+    <div class="container">
+        <h1>Reminder Me</h1>
+        <div>
+            <p>There are so many things to do, which individually don't take a lot of time but collectively can seem overwhelming.</p>
+            <p>This is a really simple web service that allows you to set up an RSS feed to remind you to do things, ideally by breaking them up into "microchores."</p>
+            <p>No account is required; you can just <a href="edit.cgi">create a feed</a> to get started!</p>
+            <p>You can also <a href="https://github.com/plaidfluff/Reminder-Me">fork me on GitHub</a>, and if you have any problems, feel free to <a href="https://github.com/plaidfluff/Reminder-Me/issues">report a bug</a>.</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Detailed Usage</h1>
+        <div>
+            <p>Let's say that you have set reminders for the following:</p>
+            <ul>
+                <li>Clean the cat box (every 2 days)</li>
+                <li>Water the plants (daily)</li>
+                <li>Clean out the ice maker (every 2 weeks)</li>
+                <li>Update my financial planning spreadsheet (every month)</li>
+            </ul>
+            <p>Reminder Me generates one feed for each of those tasks. Whenever a task becomes due, it places an item for that task into the feed. There that item sits, until you click on the link that marks it as being done, at which point a new due date is computed that tries to keep the activity more or less regular.</p>
+            <p>But it's a bit smarter than just generating a single RSS item. The item also has a little tracking image in it, which will bump the feed item's GUID every time it's viewed. This way, if you see an item but just ignore it, the next time the feed reader checks the feed, it gives me a new notification in the RSS inbox.</p>
+            <p>The ideal use case for Reminder Me is if you tend to check your RSS feeds religiously and either maintain "inbox zero" (as I do) or put some sort of high-priority display on important feeds. Obviously if you let items sit in your inbox for years, this won't do you much good (but you might want to reevaluate what RSS is meant for in that case).
+            </p>
+        </div>
+        <h1>Microchore Theory</h1>
+        <div>
+            <p>This is intended for things to be broken up into easily-done chunks. Don't plan on "vacuum house" &mdash; set up small tasks for vacuuming parts of your home. Don't say "clean kitchen," have separate tasks for "mop floor," "empty garbage," "clean counters." Pick and choose which ones you want to do at any given time. Don't fret if you put something off, as long as you get around to doing it. But if the reminders pile up, it's time to do a bunch of stuff.</p>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Other</h1>
+        <div>
+            <p>Reminder Me is licensed under the terms of GPLv2; the full license information can be found in the LICENSE file within the distribution.</p>
+            <p>This is a <a href="http://beesbuzz.biz/">busybee</a> production.</p>
+            <p>RSS is my social network, and <a href="https://news.beesbuzz.biz/fof/shared.php?user=2">these
 are my reblogs</a>.</p>
+        </div>
+    </div>
+</body>
 
-</div></div>
-
-</body> </html>
+</html>

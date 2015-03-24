@@ -39,7 +39,7 @@ if form.getfirst('edit'):
     response += 'Location: %s/edit.cgi?feed=%s\n' % (session.request_script_dir(),feed.guid)
 
 response += '''
-<html><head><title>Alarm reset</title>
+<html><head><title>Alarm reset: {name}</title>
 <link rel="stylesheet" href="{base_url}/style.css">
 </head>
 <body>
@@ -77,4 +77,4 @@ print response.format(guid=feed.guid,
                       edit_url="%s/edit.cgi" % basedir,
                       base_url=basedir,
                       duration=renderfuncs.format_delta(datetime.timedelta(seconds=when)))
-                      
+
