@@ -6,7 +6,6 @@ import base64
 import datetime
 import sys
 import renderfuncs
-import calendar
 from hashlib import md5
 
 argv = session.argv()
@@ -75,10 +74,7 @@ response += '''
 </channel>
 </rss>''';
 
-update_guid=md5("%s %s %d" % (
-    feed.guid,
-    feed.notify_next,
-    int(calendar.timegm(feed.last_seen.timetuple())/3600/3))).hexdigest()
+update_guid=md5("%s %s %s" % (feed.guid, feed.notify_next, feed.last_seen)).hexdigest()
 print response.format(
     name=feed.name or '',
     description=feed.description or '',
