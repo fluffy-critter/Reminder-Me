@@ -9,7 +9,7 @@ argv = session.argv()
 
 feed = Feed.get(guid=argv[1])
 now = datetime.datetime.utcnow()
-if feed.last_seen < now - datetime.timedelta(seconds=3600):
+if not feed.last_seen or feed.last_seen < now - datetime.timedelta(seconds=3600):
     feed.last_seen = datetime.datetime.utcnow()
     feed.save()
 
