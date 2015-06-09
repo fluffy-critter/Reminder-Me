@@ -78,7 +78,7 @@ response += '''
 update_guid=md5("%s %s %d" % (
     feed.guid,
     feed.notify_next,
-    int(calendar.timegm(feed.last_seen)/3600/3))).hexdigest()
+    int(calendar.timegm(feed.last_seen.timetuple())/3600/3))).hexdigest()
 print response.format(
     name=feed.name or '',
     description=feed.description or '',
