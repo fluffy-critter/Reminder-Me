@@ -42,7 +42,7 @@ relative path, `../data`. If you just want to put this in a
 subdirectory of an existing web share, you'll have to do something
 like this:
 
-    git clone https://github.com/plaidfluff/Reminder-Me
+    git clone https://github.com/fluffy-critter/Reminder-Me
     cd public_html
     ln -s ../Reminder-Me/site rm
 
