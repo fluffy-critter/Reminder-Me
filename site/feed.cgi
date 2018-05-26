@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!env/bin/python
 
 from model import Feed
 import session
