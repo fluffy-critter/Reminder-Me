@@ -48,6 +48,9 @@ if needsSave:
     if feed.notify_interval <= 0 or feed.notify_unit <= 0:
         errors.append("Time units should make sense.")
 
+    if '://' in feed.description or '://' in feed.name:
+        errors.append("This isn't a comment form and your spam won't be seen by anyone but yourself.")
+
     if notify_length and not feed.notify_next:
         feed.notify_next = now + notify_length
 
